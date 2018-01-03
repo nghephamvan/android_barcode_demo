@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Barcode Scanner</string>
-
+    <string name="btn_scan_barcode">Scan Barcode</string>
     <string name="no_result">Nothing to read.</string>
+    <string name="title_scan_view">Scanner Barcode</string>
+
 </resources>

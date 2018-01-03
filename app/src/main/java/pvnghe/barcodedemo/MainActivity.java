@@ -3,15 +3,15 @@ package pvnghe.barcodedemo;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.os.Vibrator;
-import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.SparseArray;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.android.gms.vision.CameraSource;
@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private CameraSource cameraSource;
     private final int REQUEST_CAMERA_ID = 1000;
     private SurfaceHolder.Callback callback;
+    private Button button_scan;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,9 +38,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         camera_view = findViewById(R.id.camera_view);
         barcodeInfo = findViewById(R.id.code_info);
+        button_scan = findViewById(R.id.button_scan);
+        button_scan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                camera_view.setVisibility(View.VISIBLE);
+            }
+        });
 
         barcodeDetector = new BarcodeDetector.Builder(this)
-                .setBarcodeFormats(Barcode.QR_CODE)
+                .setBarcodeFormats(Barcode.ALL_FORMATS)
                 .build();
 
         cameraSource = new CameraSource
@@ -65,6 +73,8 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     cameraSource.start(camera_view.getHolder());
                     barcodeInfo.setTextColor(Color.WHITE);
+                    barcodeInfo.setText(R.string.title_scan_view);
+                    button_scan.setVisibility(View.GONE);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -101,6 +111,7 @@ public class MainActivity extends AppCompatActivity {
                             barcodeInfo.setText(qrcodes.valueAt(0).displayValue);
                             barcodeInfo.setTextColor(Color.RED);
                             camera_view.setVisibility(View.GONE);
+                            button_scan.setVisibility(View.VISIBLE);
                         }
                     });
                 }
@@ -109,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         switch (requestCode) {
             case REQUEST_CAMERA_ID: {
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {

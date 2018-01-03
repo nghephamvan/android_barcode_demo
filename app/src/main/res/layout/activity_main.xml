@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -13,17 +12,26 @@
     <SurfaceView
         android:id="@+id/camera_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:visibility="gone"/>
 
     <TextView
         android:id="@+id/code_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/camera_view"
         android:layout_centerHorizontal="true"
-        android:text="@string/no_result"
-        android:textColor="@color/white"
-        android:layout_margin="10dp"
+        android:layout_margin="5dp"
+        android:text="@string/title_scan_view"
+        android:textColor="@color/black"
         android:textSize="18sp"/>
+
+    <Button
+        android:id="@+id/button_scan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/code_info"
+        android:layout_centerHorizontal="true"
+        android:text="@string/btn_scan_barcode"
+        android:visibility="visible"/>
 
 </RelativeLayout>
